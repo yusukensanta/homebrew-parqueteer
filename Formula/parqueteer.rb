@@ -16,8 +16,9 @@ class Parqueteer < Formula
     # Install all files to libexec
     libexec.install Dir["*"]
 
-    # Create wrapper scripts that inject JAVA_HOME (replaces bare symlinks)
-    bin.env_script_all_files libexec/"bin", JAVA_HOME: Formula["openjdk@21"].opt_prefix
+    # Create wrapper that injects JAVA_HOME before calling the launcher script
+    (bin/"parqueteer").write_env_script libexec/"bin/parqueteer",
+      JAVA_HOME: Formula["openjdk@21"].opt_prefix
   end
 
   test do
