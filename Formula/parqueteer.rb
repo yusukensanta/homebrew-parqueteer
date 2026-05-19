@@ -1,29 +1,30 @@
 class Parqueteer < Formula
   desc "CLI tool for working with Parquet files - query, inspect, and convert with ease"
   homepage "https://github.com/yusukensanta/parqueteer"
-  url "https://github.com/yusukensanta/parqueteer/releases/download/v0.7.1/parqueteer-0.7.1.tgz"
   version "0.7.1"
-  sha256 "764eed35f664a057cbc1e3945de26a6bd93a2d6c7aeeceded97abd880afb8313"
   license "Apache-2.0"
 
-  # Requires Java 21 or later
+  depends_on "coursier"
   depends_on "openjdk@21"
 
   def install
-    # Remove Windows batch files
-    rm_r Dir["bin/*.bat"]
+    java_home = Formula["openjdk@21"].opt_prefix
+    cs_bin = Formula["coursier"].opt_bin/"cs"
 
-    # Install all files to libexec
-    libexec.install Dir["*"]
-
-    # Create wrapper that injects JAVA_HOME before calling the launcher script
-    (bin/"parqueteer").write_env_script libexec/"bin/parqueteer",
-      JAVA_HOME: Formula["openjdk@21"].opt_prefix
+    (bin/"parqueteer").write <<~EOS
+      #!/bin/sh
+      export JAVA_HOME="#{java_home}"
+      exec "#{cs_bin}" launch \
+        -J-Xmx1G \
+        "-J--add-opens=java.base/java.lang=ALL-UNNAMED" \
+        "-J--add-opens=java.base/sun.nio.ch=ALL-UNNAMED" \
+        io.github.yusukensanta:parqueteer_3:#{version} \
+        -- "$@"
+    EOS
+    chmod 0755, bin/"parqueteer"
   end
 
   test do
-    # Test that the binary exists and runs
-    output = shell_output("#{bin}/parqueteer --version 2>&1")
-    assert_match version.to_s, output
+    assert_match version.to_s, shell_output("#{bin}/parqueteer --version 2>&1")
   end
 end
