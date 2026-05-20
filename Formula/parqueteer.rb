@@ -1,7 +1,7 @@
 class Parqueteer < Formula
   desc "CLI tool for working with Parquet files - query, inspect, and convert with ease"
   homepage "https://github.com/yusukensanta/parqueteer"
-  version "0.8.0"
+  version "0.8.1"
   license "Apache-2.0"
 
   depends_on "coursier"
