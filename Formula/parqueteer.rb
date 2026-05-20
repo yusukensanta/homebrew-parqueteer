@@ -11,7 +11,7 @@ class Parqueteer < Formula
 
   def install
     java_home = Formula["openjdk@21"].opt_prefix
-    cs_bin = Formula["coursier"].opt_bin/"cs"
+    cs_bin = Formula["coursier"].opt_bin/"coursier"
 
     (bin/"parqueteer").write <<~EOS
       #!/bin/sh
