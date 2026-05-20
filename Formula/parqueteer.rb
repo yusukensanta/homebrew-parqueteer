@@ -3,7 +3,7 @@ class Parqueteer < Formula
   homepage "https://github.com/yusukensanta/parqueteer"
   url "https://github.com/yusukensanta/parqueteer/archive/refs/tags/v0.8.3.tar.gz"
   sha256 "27e0adbf1e2e3ec53147df3bcf2ee23f492b98b820569833f25c2b137e4399f5"
-  version "0.8.3"
+  version "0.8.2"
   license "Apache-2.0"
 
   depends_on "coursier"
