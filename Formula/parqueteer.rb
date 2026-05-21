@@ -1,29 +1,17 @@
 class Parqueteer < Formula
   desc "CLI tool for working with Parquet files - query, inspect, and convert with ease"
   homepage "https://github.com/yusukensanta/parqueteer"
-  url "https://github.com/yusukensanta/parqueteer/archive/refs/tags/v0.8.3.tar.gz"
-  sha256 "27e0adbf1e2e3ec53147df3bcf2ee23f492b98b820569833f25c2b137e4399f5"
-  version "0.8.2"
+  url "https://github.com/yusukensanta/parqueteer/releases/download/v0.9.3/parqueteer-0.9.3.tgz"
+  sha256 "742d2ff9a88f35c971eb6e7ddfad788b91cf2c2d5676d971cdad4289f04a95f0"
+  version "0.9.3"
   license "Apache-2.0"
 
-  depends_on "coursier"
   depends_on "openjdk@21"
 
   def install
-    java_home = Formula["openjdk@21"].opt_prefix
-    cs_bin = Formula["coursier"].opt_bin/"coursier"
-
-    (bin/"parqueteer").write <<~EOS
-      #!/bin/sh
-      export JAVA_HOME="#{java_home}"
-      exec "#{cs_bin}" launch \
-        -J-Xmx1G \
-        "-J--add-opens=java.base/java.lang=ALL-UNNAMED" \
-        "-J--add-opens=java.base/sun.nio.ch=ALL-UNNAMED" \
-        io.github.yusukensanta:parqueteer_3:#{version} \
-        -- "$@"
-    EOS
-    chmod 0755, bin/"parqueteer"
+    rm_r Dir["bin/*.bat"]
+    libexec.install Dir["*"]
+    bin.env_script_all_files libexec/"bin", JAVA_HOME: Formula["openjdk@21"].opt_prefix
   end
 
   test do
