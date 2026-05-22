@@ -11,7 +11,8 @@ class Parqueteer < Formula
   def install
     rm_r Dir["bin/*.bat"]
     libexec.install Dir["*"]
-    bin.env_script_all_files libexec/"bin", JAVA_HOME: Formula["openjdk@21"].opt_prefix
+    (bin/"parqueteer").write_env_script libexec/"bin/parqueteer",
+      JAVA_HOME: Formula["openjdk@21"].opt_prefix
   end
 
   test do
