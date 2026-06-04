@@ -1,9 +1,9 @@
 class Parqueteer < Formula
   desc "CLI tool for working with Parquet files - query, inspect, and convert with ease"
   homepage "https://github.com/yusukensanta/parqueteer"
-  url "https://github.com/yusukensanta/parqueteer/releases/download/v0.10.61/parqueteer-0.10.61.tgz"
-  sha256 "7020f5f0712446918d786d5903fd5243626bba9211565609609c82d85e700d30"
-  version "0.10.61"
+  url "https://github.com/yusukensanta/parqueteer/releases/download/v0.10.62/parqueteer-0.10.62.tgz"
+  sha256 "312a92710ff5b198f3ffcd163eb6d3ac9206b734a2a0f620d83ce8794a778530"
+  version "0.10.62"
   license "Apache-2.0"
 
   depends_on "openjdk@21"
